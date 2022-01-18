@@ -8,15 +8,15 @@ class Solution
 	public:
 	//Function to return list containing vertices in Topological order. vo
 	
-	void dfs(int node,vector<int> adj[],vector<bool>& vis,stack<int>& st){
+	void dfs(int node,vector<int> adj[],vector<bool>& vis,vector<int>& ans){
 	    
 	    for(int next:adj[node]){
 	        if(!vis[next]){
 	            vis[next]=true;
-	            dfs(next,adj,vis,st);
+	            dfs(next,adj,vis,ans);
 	        }
 	    }
-	    st.push(node);
+	    ans.push_back(node);
 	    
 	    
 	}
@@ -24,20 +24,21 @@ class Solution
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    vector<bool> vis(V+1,false);
-	    stack<int> st;
+	    vector<int> ans;
 	    
 	    for(int i=0;i<V;i++){
 	        if(!vis[i]){
 	            vis[i]=true;
-	            dfs(i,adj,vis,st);
+	            dfs(i,adj,vis,ans);
 	        }
 	    }
-	    vector<int> topo;
-	    while(!st.empty()){
-	        topo.push_back(st.top());
-	        st.pop();
-	    }
-	    return topo;
+	   // vector<int> topo;
+	   // while(!st.empty()){
+	   //     topo.push_back(st.top());
+	   //     st.pop();
+	   // }
+	   reverse(ans.begin(),ans.end());
+	    return ans;
 	}
 };
 
