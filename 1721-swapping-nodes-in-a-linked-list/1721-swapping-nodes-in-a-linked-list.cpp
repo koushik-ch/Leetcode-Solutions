@@ -13,17 +13,20 @@ public:
     ListNode* swapNodes(ListNode* head, int k) {
         ListNode* last=head;
         ListNode* beg=head;
+        ListNode* dummy=head;
         int i=1;
         
-        while(beg->next&&i<k){
-            beg=beg->next;
+        while(beg->next&&dummy->next){
+            if(i<k){
+                beg=beg->next;
+                dummy=beg;
+                
+            }
+            else{
+                dummy=dummy->next;
+                last=last->next;
+            }
             i++;
-        }
-        ListNode* dummy=beg;
-        
-        while(dummy->next){
-            last=last->next;
-            dummy=dummy->next;
         }
         swap(last->val,beg->val);
         return head;
