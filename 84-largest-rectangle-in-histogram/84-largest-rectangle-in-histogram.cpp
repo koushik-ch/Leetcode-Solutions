@@ -1,33 +1,55 @@
 class Solution {
 public:
-    int largestRectangleArea(vector<int>& h) {
-       int n=h.size();
-        int ans=0;
-        vector<int>left(n,0);
-        vector<int>right(n,0);
-        stack<int>st;
-       for(int i=0;i<n;i++){
-         while(!st.empty() and h[st.top()]>=h[i]){
-             st.pop();
-         }if(st.empty()){
-             left[i]=0;
-         }else{
-             left[i]=st.top()+1;
-         }st.push(i);
-       }
-	   while(!st.empty()){
-           st.pop();
-       }
+    
+    void nextSmaller(vector<int>& nums,vector<int>& right){
+        stack<int> st;
+        int n=nums.size();
+        
         for(int i=n-1;i>=0;i--){
-            while(!st.empty() and h[st.top()]>=h[i]){
+            while(!st.empty()&&nums[i]<=nums[st.top()]){
                 st.pop();
-            }if(st.empty()){
+            }
+            if(st.empty())
                 right[i]=n-1;
-            }else{
+            else
                 right[i]=st.top()-1;
-            }st.push(i);
-        }for(int i=0;i<n;i++){
-            ans=max(ans,h[i]*(right[i]-left[i]+1));
-        }return ans;
+            
+            st.push(i);
+        }
+    }
+    void prevSmaller(vector<int>& nums,vector<int>& left){
+        stack<int> st;
+        int n=nums.size();
+        
+        for(int i=0;i<n;i++){
+            while(!st.empty()&&nums[i]<=nums[st.top()]){
+                st.pop();
+            }
+            if(st.empty())
+                left[i]=0;
+            else
+                left[i]=st.top()+1;
+            
+            st.push(i);
+        }
+    }
+    
+    int largestRectangleArea(vector<int>& heights) {
+        int n=heights.size();
+        if(n==1)
+            return heights[0];
+        vector<int> right(n);
+        vector<int> left(n);
+        
+        int ans=0;
+        prevSmaller(heights,left);
+        nextSmaller(heights,right);
+        
+        for(int i=0;i<n;i++){
+            int val=(right[i]-left[i]+1)*heights[i];
+            ans=max(ans,val); 
+        }
+        
+        return ans;
     }
 };
