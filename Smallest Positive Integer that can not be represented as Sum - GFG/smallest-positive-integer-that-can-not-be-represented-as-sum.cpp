@@ -13,17 +13,17 @@ class Solution
 public:
     long long smallestpositive(vector<long long> nums, int n)
     { 
+        long long maxSoFar=0;
+        
         sort(nums.begin(),nums.end());
         
-        long long maxSum=0;
-        
         for(int i=0;i<n;i++){
-            if(nums[i]>maxSum+1)
-                return maxSum+1;
+            if(nums[i]<=maxSoFar+1)
+                maxSoFar+=nums[i];
             else
-                maxSum+=nums[i];
+                return maxSoFar+1;
         }
-        return maxSum+1;
+        return maxSoFar+1;
     } 
 };
 
