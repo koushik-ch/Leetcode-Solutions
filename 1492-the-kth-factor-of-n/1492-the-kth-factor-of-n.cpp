@@ -1,16 +1,20 @@
 class Solution {
 public:
     int kthFactor(int n, int k) {
-        int count=1;
+        float root=sqrt(n);
         
-        if(k==1)
-            return 1;
-        
-        for(int i=2;i<=n;i++){
+        for(int i=1;i<root;i++){
             if(n%i==0)
-                count++;
-            if(count==k)
+                k--;
+            if(k==0)
                 return i;
+        }
+        
+        for(int i=root;i>0;i--){
+            if(n%i==0)
+                k--;
+            if(k==0)
+                return n/i;
         }
         return -1;
     }
