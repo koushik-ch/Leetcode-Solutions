@@ -32,9 +32,31 @@ public:
         }
         return dp[0][0];
     }
+    
+    int spaceOptimize(int n,vector<vector<int>>& triangle){
+        vector<int> prev(n,0);
+        
+        for(int i=0;i<n;i++)
+            prev[i]=triangle[n-1][i];
+        
+        for(int i=n-2;i>=0;i--){
+            vector<int> curr(n,0);
+            for(int j=i;j>=0;j--){
+                int down=prev[j];
+                
+                int diagonal=prev[j+1];
+                
+                curr[j]=min(down,diagonal)+triangle[i][j];
+            }
+            prev=curr;
+        }
+        return prev[0];
+    }
+    
     int minimumTotal(vector<vector<int>>& triangle) {
         int n=triangle.size();
         vector<vector<int>> dp(n,vector<int>(n,-1));
+        return spaceOptimize(n,triangle);
         return tabulation(n,triangle);
         return memoize(0,0,triangle,dp);
     }
