@@ -36,9 +36,29 @@ public:
         
     }
     
+    int spaceOptimize(int m1,int m2,string s1,string s2){
+        vector<int> prev(m2+1,0);
+        
+        for(int i=1;i<=m1;i++){
+            vector<int> curr(m2+1,0);
+            
+            for(int j=1;j<=m2;j++){
+                
+                if(s1[i-1]==s2[j-1])
+                    curr[j]=prev[j-1]+1;
+                else
+                    curr[j]=max(prev[j],curr[j-1]);
+                
+            }
+            prev=curr;
+        }
+        return prev[m2];
+    }
+    
     int longestCommonSubsequence(string s1, string s2) {
         int m1=s1.length(),m2=s2.length();
         
+        return spaceOptimize(m1,m2,s1,s2);
         return tabulation(m1,m2,s1,s2);
         vector<vector<int>> dp(m1+1,vector<int>(m2+1,-1));
         
