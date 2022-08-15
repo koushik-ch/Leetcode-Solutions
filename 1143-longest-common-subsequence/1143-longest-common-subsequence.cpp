@@ -21,14 +21,6 @@ public:
     int tabulation(int m1,int m2,string s1,string s2){
         vector<vector<int>> dp(m1+1,vector<int>(m2+1,0));
         
-//         if(s1[0]==s2[0])
-//             dp[0][0]=1;
-        
-//         for(int i=0;i<m1;i++)
-//             dp[i][0]=s1[0]==s2[0];
-//         for(int j=0;j<m2;j++)
-//             dp[0][j]=s1[0]==s2[0];
-        
         for(int i=1;i<=m1;i++){
             for(int j=1;j<=m2;j++){
                 
