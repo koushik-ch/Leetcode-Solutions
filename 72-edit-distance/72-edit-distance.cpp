@@ -1,6 +1,28 @@
 class Solution {
 public:
-    
+    int spaceOptimize(string s1,string s2){
+        int n = s1.size();
+        int m = s2.size();
+
+        vector<int> prev(m+1,0);
+
+        for(int j=0;j<m;j++)
+            prev[j]=j;
+
+        for(int i=1;i<n+1;i++){
+            vector<int> curr(m+1,0);
+            for(int j=1;j<m+1;j++){
+                if(s1[i-1]==s2[j-1])
+                    curr[j]=prev[j-1];
+
+                else curr[j] = 1+min(prev[j-1],min(prev[j],curr[j-1]));
+            }
+            prev=curr;
+        }
+
+        return prev[m];
+    }
+        
     int tabulation(string S1,string S2){
     int n = S1.size();
     int m = S2.size();
