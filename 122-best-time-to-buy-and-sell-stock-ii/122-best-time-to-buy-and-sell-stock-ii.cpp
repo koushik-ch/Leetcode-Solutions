@@ -1,5 +1,28 @@
 class Solution {
 public:
+    int spaceOptimize(vector<int>& nums){
+        int n=nums.size();
+        vector<vector<int>> dp(n+1,vector<int>(2,0));
+        
+        int prevSell=nums[n-1];
+        int prevBuy=0;
+        
+        for(int i=n-1;i>=0;i--){
+            //Buy
+            int buyProfit;
+            int sellProfit;
+            
+            buyProfit=-nums[i]+prevSell;
+            buyProfit=max(buyProfit,prevBuy);
+            prevBuy=buyProfit;
+            
+            sellProfit=nums[i]+prevBuy;
+            sellProfit=max(sellProfit,prevSell);
+            prevSell=sellProfit;
+        }
+        
+        return prevBuy;
+    }
     int tabulation(vector<int>& nums){
         int n=nums.size();
         vector<vector<int>> dp(n+1,vector<int>(2,0));
@@ -24,6 +47,7 @@ public:
         return dp[0][1];
     }
     int maxProfit(vector<int>& prices) {
+        return spaceOptimize(prices);
         return tabulation(prices);
         int n=prices.size();
         
