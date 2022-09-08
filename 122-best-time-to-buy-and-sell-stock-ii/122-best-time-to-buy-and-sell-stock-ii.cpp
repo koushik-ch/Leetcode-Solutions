@@ -1,6 +1,30 @@
 class Solution {
 public:
+    int tabulation(vector<int>& nums){
+        int n=nums.size();
+        vector<vector<int>> dp(n+1,vector<int>(2,0));
+        
+        dp[n-1][0]=nums[n-1];
+        dp[n-1][1]=0;
+        
+        for(int i=n-1;i>=0;i--){
+            //Buy
+            int buyProfit;
+            int sellProfit;
+            
+            buyProfit=-nums[i]+dp[i+1][0];
+            buyProfit=max(buyProfit,dp[i+1][1]);
+            dp[i][1]=buyProfit;
+            
+            sellProfit=nums[i]+dp[i+1][1];
+            sellProfit=max(sellProfit,dp[i+1][0]);
+            dp[i][0]=sellProfit;
+        }
+        
+        return dp[0][1];
+    }
     int maxProfit(vector<int>& prices) {
+        return tabulation(prices);
         int n=prices.size();
         
          vector<vector<int>> dp(n+1,vector<int>(2,-1));
