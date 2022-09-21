@@ -6,28 +6,35 @@ public:
         int visCount=0;
         vector<int> vis(n,0);
         
+        return bfs(n,rooms,vis);
+    }
+    
+    bool bfs(int n,vector<vector<int>>& rooms,vector<int>& vis){
+        int visCount=0;
+        
         queue<int> q;
         q.push(0);
         
         while(!q.empty()){
-            int curr=q.front();
+            int room=q.front();
             q.pop();
-            if(vis[curr])
+            
+            if(vis[room])
                 continue;
             
-            vis[curr]=1;
+            vis[room] = 1;
             visCount++;
-            cout<<curr<<" "<<visCount<<endl;
-            for(int key:rooms[curr])
-                    q.push(key);
             
+            
+            
+            for(int i=0;i<rooms[room].size();i++){
+                int newRoom=rooms[room][i];
+                    q.push(newRoom);
+            }
         }
-        
-        
         if(visCount==n)
-            return true;
-        
+                return true;
         return false;
-        
     }
+    
 };
